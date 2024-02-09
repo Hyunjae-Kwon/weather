@@ -37,7 +37,7 @@ public class JdbcMemoRepository {
     }
 
     private RowMapper<Memo> memoRowMapper() {
-        return(rs, rowNum) -> new Memo(
+        return (rs, rowNum) -> new Memo(
                 rs.getInt("id"),
                 rs.getString("text")
         );
