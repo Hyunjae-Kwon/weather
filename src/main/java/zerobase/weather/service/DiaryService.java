@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import zerobase.weather.WeatherApplication;
 import zerobase.weather.domain.DateWeather;
 import zerobase.weather.domain.Diary;
 import zerobase.weather.repository.DateWeatherRespository;
@@ -36,7 +35,7 @@ public class DiaryService {
     private final DateWeatherRespository dateWeatherRespository;
 
     private final Logger logger =
-            LoggerFactory.getLogger(WeatherApplication.class);
+            LoggerFactory.getLogger(DiaryService.class);
 
     public DiaryService(DiaryRepository diaryRepository, DateWeatherRespository dateWeatherRespository) {
         this.diaryRepository = diaryRepository;
@@ -94,9 +93,6 @@ public class DiaryService {
 
     @Transactional(readOnly = true)
     public List<Diary> readDiary(LocalDate date) {
-//        if(date.isAfter(LocalDate.ofYearDay(3050, 1))) {
-//            throw new InvalidDate();
-//        }
         return diaryRepository.findAllByDate(date);
     }
 
@@ -131,7 +127,7 @@ public class DiaryService {
                         new InputStreamReader(connection.getInputStream()));
             } else {
                 br = new BufferedReader(
-                        new InputStreamReader(connection.getInputStream()));
+                        new InputStreamReader(connection.getErrorStream()));
             }
             String inputLine;
             StringBuilder response = new StringBuilder();
